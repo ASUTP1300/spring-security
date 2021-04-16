@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Пользователь</title>
+</head>
+<body>
+    <p th:text="${user.getId()}">VALUE</p>
+    <p th:text= "${user.getFirstName()}" >VALUE</p>
+    <p th:text="${user.getLastName()}">VALUE</p>
+    <p th:text="${user.getEmail()}">VALUE</p>
+    <p th:text="${user.getPassword()}">VALUE</p>
+    <p th:each="role : ${user.getRoles()}" th:text="${role.getRole()}"></p>
+    <br/>
+    <br/>
+    <br/>
+   </body>
+</html>
