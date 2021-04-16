@@ -683,77 +683,100 @@
 </ObjectGrants>
     </user>
     <table id="211" parent="3" name="animal"/>
-    <table id="212" parent="3" name="hibernate_sequence">
+    <table id="212" parent="3" name="cart"/>
+    <table id="213" parent="3" name="hibernate_sequence">
       <Engine>MyISAM</Engine>
     </table>
-    <table id="213" parent="3" name="products"/>
-    <table id="214" parent="3" name="users">
-      <Engine>MyISAM</Engine>
-    </table>
-    <column id="215" parent="211" name="id">
+    <table id="214" parent="3" name="products"/>
+    <table id="215" parent="3" name="roles"/>
+    <table id="216" parent="3" name="users"/>
+    <column id="217" parent="211" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="216" parent="211" name="animal_name">
+    <column id="218" parent="211" name="animal_name">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
     </column>
-    <column id="217" parent="211" name="animal_desc">
+    <column id="219" parent="211" name="animal_desc">
       <Position>3</Position>
       <DataType>varchar(45)|0s</DataType>
     </column>
-    <key id="218" parent="211" name="PRIMARY">
+    <key id="220" parent="211" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="219" parent="212" name="next_val">
+    <column id="221" parent="212" name="cart_id">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <key id="222" parent="212" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>cart_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="223" parent="213" name="next_val">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="220" parent="213" name="id">
+    <column id="224" parent="214" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="221" parent="213" name="ProductNAme">
+    <column id="225" parent="214" name="ProductNAme">
       <Position>2</Position>
       <DataType>varchar(20)|0s</DataType>
     </column>
-    <column id="222" parent="213" name="Price">
+    <column id="226" parent="214" name="Price">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
     </column>
-    <key id="223" parent="213" name="PRIMARY">
+    <key id="227" parent="214" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="224" parent="214" name="id">
+    <column id="228" parent="215" name="id">
       <Position>1</Position>
-      <DataType>bigint(20)|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>null</SequenceIdentity>
+      <DataType>int(11)|0s</DataType>
     </column>
-    <column id="225" parent="214" name="email">
+    <column id="229" parent="215" name="user_name">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
     </column>
-    <column id="226" parent="214" name="name">
+    <column id="230" parent="215" name="role">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
     </column>
-    <column id="227" parent="214" name="last_name">
+    <column id="231" parent="216" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="232" parent="216" name="name">
+      <Position>2</Position>
+      <DataType>varchar(45)|0s</DataType>
+    </column>
+    <column id="233" parent="216" name="lastname">
+      <Position>3</Position>
+      <DataType>varchar(45)|0s</DataType>
+    </column>
+    <column id="234" parent="216" name="password">
       <Position>4</Position>
-      <DataType>varchar(255)|0s</DataType>
+      <DataType>varchar(45)|0s</DataType>
     </column>
-    <key id="228" parent="214" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>id</ColNames>
-      <Primary>1</Primary>
-    </key>
+    <column id="235" parent="216" name="email">
+      <Position>5</Position>
+      <DataType>varchar(45)|0s</DataType>
+    </column>
   </database-model>
 </dataSource>

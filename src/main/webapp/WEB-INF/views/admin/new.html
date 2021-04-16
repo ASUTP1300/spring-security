@@ -5,8 +5,7 @@
     <title>Новый пользователь</title>
 </head>
 <body>
-    <form th:method= "POST" th:action="@{/users}" th:object="${user}">
-
+    <form th:method= "POST" th:action="@{/admin}" th:object="${user}">
         <label for="firstName"> Введите имя : </label>
         <input type="text" th:field = "*{firstName}" id = "firstName" style=position:absolute;left:24%;/>
         <br/>
@@ -19,8 +18,22 @@
         <input type="text" th:field = "*{email}" id = "email"  style=position:absolute;left:24%;/>
         <br/>
         <br/>
+        <label for="password"> Пароль для аутентификации : </label>
+        <input type="text" th:field = "*{password}" id = "password"  style=position:absolute;left:24%;/>
+        <br/>
+        <br/>
         <input type="submit" value="Создать пользователя !"/>
+        <br/>
+        <br/>
+        <input type=checkbox id=adminId name=roles value="ROLE_ADMIN">
+        <label for="adminId">Админ</label>
 
+        <input type=checkbox id=userId name=roles value="ROLE_USER">
+        <label for="userId">Пользователь</label>
+
+    </form>
+    <form th:method="POST" th:action="@{/logout}">
+        <button type="submit">Sign Out</button>
     </form>
 
 </body>

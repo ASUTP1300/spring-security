@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -19,12 +20,12 @@ import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
+@EnableJpaRepositories("web")
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
 public class PersistenceJPAConfig {
 
     private  Environment env;
-
     @Autowired
     public PersistenceJPAConfig(Environment env) {
         this.env = env;
@@ -68,6 +69,7 @@ public class PersistenceJPAConfig {
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         properties.setProperty("hibernate.show_sql", "true");
+        properties.setProperty("hibernate.hbm2ddl.auto",env.getProperty("hibernate.hbm2ddl.auto"));
         return properties;
     }
 }
