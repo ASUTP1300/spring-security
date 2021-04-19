@@ -3,19 +3,19 @@ package web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import web.model.Role;
 import web.model.User;
 import web.repository.RoleRepository;
 import web.repository.UserRepository;
+import web.service.RoleService;
 import web.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -23,11 +23,19 @@ public class AdminController {
 
     private UserService userService;
 
-    @Autowired
+    private RoleService roleService;
+
     private RoleRepository roleRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
+    }
+
+    @Autowired
+    public void setRoleRepository(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
 
     @Autowired
     public AdminController(UserService userService) {
@@ -42,63 +50,43 @@ public class AdminController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") long id, Model model) {
-
-        //Получить одного человека по id
         model.addAttribute("user", userService.getById(id));
+
         return "admin/getById";
     }
 
     @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user ){
+    public String newUser(Model model ){
+        User user = new User();
+        List<Role> listRoles =  roleRepository.findAll();
+
+        model.addAttribute("user", user);
+        model.addAttribute("listRoles", listRoles);
         return "admin/new";
     }
 
     @PostMapping
     public String create(@ModelAttribute("user") User user,
-                         @ModelAttribute("roles") String[] stringRole){
-
-            System.out.println(stringRole[0]);
-
-
-        user.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
+                         @RequestParam(required=false, name = "listRolesResponse") List<String> roles){
+        user.setRoles(roleService.getRoleByName(roles));
         userService.add(user);
         return "redirect:/admin";
     }
 
-   //@GetMapping("/{id}/edit")
-   //public String edit(Model model, @PathVariable("id") long id){
-   //    User user = userService.getById(id);
-   //    model.addAttribute("user", userService.getById(id) );
-   //    return "admin/edit";
-   //}
-
-
     @GetMapping("/{id}/edit")
-    public ModelAndView edit(Model model, @PathVariable("id") long id){
+    public String edit( @PathVariable("id") long id, Model model){
         User user = userService.getById(id);
-        ModelAndView modelAndView = new ModelAndView("admin/edit");
-        modelAndView.addObject("user", user);
-
-        List<Role> allRoles = roleRepository.findAll();
-        String[] strings = {"ROLE_ADMIN", "ROLE_USER"};
-        List<String>  list = new ArrayList<>();
-        modelAndView.addObject ( "allRoles", allRoles );
-        modelAndView.addObject("user_roles", user.getRoles());
-        modelAndView.addObject ("rlz",strings);
-        modelAndView.addObject ("confirm",list);
-        return modelAndView;
+        model.addAttribute("user", user);
+        List<Role> listRoles =  roleRepository.findAll();
+        model.addAttribute("listRoles", listRoles);
+        return "admin/edit";
     }
 
     @PostMapping("/{id}")
-    public String update(@ModelAttribute("user") User user,
-                         @ModelAttribute()
-                          @PathVariable("id") long id,
-                         @ModelAttribute("confirm") String roles){
-            System.out.println(roles);
-
-        user.setId(id);
+    public String update( @ModelAttribute("user") User user,
+                          @RequestParam(required=false, name = "listRolesResponse") List<String> roles){
+        user.setRoles(roleService.getRoleByName(roles));
         userService.update(user);
-
         return "redirect:/admin";
     }
 
@@ -107,5 +95,4 @@ public class AdminController {
         userService.remove(id);
         return "redirect:/admin";
     }
-
 }

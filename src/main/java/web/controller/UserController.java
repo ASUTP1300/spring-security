@@ -21,7 +21,6 @@ public class UserController {
         this.userService = userService;
     }
 
-
     @GetMapping("/user")
     public String showResults(final HttpServletRequest request, Principal principal, Model model) {
         String currentUser = principal.getName();

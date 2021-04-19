@@ -9,6 +9,7 @@ import java.util.*;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,13 +23,11 @@ public class User implements UserDetails {
     @Column(name = "lastname")
     private String lastName;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
-
-
+    private Set<Role> roles = new HashSet<>();
 
     public User() {
     }
@@ -36,7 +35,6 @@ public class User implements UserDetails {
     public User(String password) {
         this.password = password;
     }
-
 
     public User(String firstName, String lastName, String email, Set<Role> roles) {
         this.firstName = firstName;
@@ -84,7 +82,6 @@ public class User implements UserDetails {
     public List<Role> getListRoles(){
         return new ArrayList<>(roles);
     }
-
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
